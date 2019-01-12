@@ -6,13 +6,14 @@ FROM python:3.7
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
 
-# create root directory for our project in the container
+# create root directory for our project in the container, my project needed buildeey name but you can name it what ever you want
+# You can change the name buildeey to what ever you want
 RUN mkdir /buildeey
 
 # Set the working directory to /buildeey/
 WORKDIR /buildeey/
 
-# Copy the current directory contents into the container at /buildeey
+# Copy the current directory contents into the container at /buildeey/
 ADD . /buildeey/
 
 # Install any needed packages specified in requirements.txt
