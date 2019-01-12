@@ -48,6 +48,9 @@ services:
     #     ipv4_address: 192.168.80.3
     ports:
     - "8090:8090"
+    #If you changed the mysql container make sure to change this too 
+    # depends_on :
+    #  -postgresql
     depends_on:
     - mysql
 

@@ -1,3 +1,4 @@
  Django>=2.0
+ #those packages i use for my api if you dont need them just delete them and install what ever you need from pip
 django-jet==1.0.8
 djangorestframework>=3.9.0
