@@ -10,11 +10,32 @@ ENV PYTHONUNBUFFERED 1
 # You can change the name buildeey to what ever you want
 RUN mkdir /buildeey
 
+
+#test for cash to make it faster in build
+ADD ./requirements.txt /buildeey/requirements.txt
+
+
+# Install any needed packages specified in requirements.txt
+RUN pip install -r /buildeey/requirements.txt
+
 # Set the working directory to /buildeey/
 WORKDIR /buildeey/
 
 # Copy the current directory contents into the container at /buildeey/
 ADD . /buildeey/
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+
+
+# Yes I am crazy about good looking code, I cant handle it
+RUN apt-get update && apt-get install -y \
+      vim \
+      zsh
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+
+
+#RUN echo 'alias py="python manage.py"' >> ~/.bashrc
+RUN echo 'alias py="python manage.py"' >> ~/.zshrc
+
+
+
+
