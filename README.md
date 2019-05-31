@@ -10,8 +10,8 @@
 ## Installation
 
 - First - Clone this repo to your local machine using `https://github.com/issamlk1/docker-python`
-- Then optimize the dockerfile and choose your database (Default postgresql)
-- IF you changed anything in the dockerfile make sure that you check requirements.txt and optimize it too.
+- Then optimize the `dockerfile` and choose your database (Default postgresql)
+- IF you changed anything in the `dockerfile` make sure that you check `requirements.txt` and optimize it too.
 - Open termenal from the local file and follow the next steps
 
 ---
@@ -74,7 +74,7 @@ $ docker-compose down
 ```
 
 ## ٍAccess the containers
-- To access the django container just type this command in your terminal
+- To access the docker containers just type this command in your terminal
 
 > django
 ```shell
