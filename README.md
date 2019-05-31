@@ -1,6 +1,6 @@
-# Django-Dock
+# Django-Docker
 
-> Django Docker
+> Django Docker together
 
 > For making new projects with docker and django without using virtual environment 
 
@@ -87,6 +87,20 @@ $ docker-compose exec -it django bash
 > postgresql
 ```shell
 $ docker-compose exec -it postgresql bash
+```
+---
+
+## ٍImportant
+- If you added new django packages to your projects make sure to run following command from django bash before shutting down 
+   
+
+```shell
+$ pip freeze > requirements.txt
+```
+
+> Then before running the project again build the project again to download your packages
+```shell
+$ docker-compose build django
 ```
 ---
 
