@@ -53,6 +53,7 @@ DATABASES = {
     }
 }
 ```
+---
 
 ## Getting Started
 - After finishing all the steps above you can start using django by 
@@ -65,6 +66,7 @@ $ docker-compose up django
 ```shell
 $ docker-compose up -d django
 ```
+---
 
 ## ٍShutting down
 - To shut down the docker container just type this in the terminal
@@ -72,6 +74,7 @@ $ docker-compose up -d django
 ```shell
 $ docker-compose down
 ```
+---
 
 ## ٍAccess the containers
 - To access the docker containers just type this command in your terminal
@@ -85,6 +88,7 @@ $ docker-compose exec -it django bash
 ```shell
 $ docker-compose exec -it postgresql bash
 ```
+---
 
 ## FAQ
 
@@ -103,7 +107,7 @@ Reach out to me at one of the following places!
 ---
 
 
----
+
 
 ## License
 
