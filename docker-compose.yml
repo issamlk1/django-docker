@@ -24,16 +24,16 @@ services:
     #   frontend:
     #     ipv4_address: 192.168.80.2
   
-  # For postgresql uncomment this and comment the mysql container
-  # postgresql:
-  #   container_name: postgresql
-  #   image: postgres:11
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #   volumes:
-  #     - "./postgres-data:/var/lib/postgresql/data"
-  #   ports:
-  #     - "5432:5432"
+    # For postgresql uncomment this and comment the mysql container
+    # postgresql:
+    #   container_name: postgresql
+    #   image: postgres:11
+    #   environment:
+    #     POSTGRES_PASSWORD: postgres
+    #   volumes:
+    #     - "./postgres-data:/var/lib/postgresql/data"
+    #   ports:
+    #     - "5432:5432"
 
   # For django
   django:
