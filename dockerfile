@@ -6,23 +6,23 @@ FROM python:3.7
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
 
-# create root directory for our project in the container, my project needed buildeey name but you can name it what ever you want
-# You can change the name buildeey to what ever you want
-RUN mkdir /buildeey
+# create root directory for our project in the container, my project needed name name but you can name it what ever you want
+# You can change the name name to what ever you want
+RUN mkdir /name
 
 
 #test for cash to make it faster in build
-ADD ./requirements.txt /buildeey/requirements.txt
+ADD ./requirements.txt /name/requirements.txt
 
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r /buildeey/requirements.txt
+RUN pip install -r /name/requirements.txt
 
-# Set the working directory to /buildeey/
-WORKDIR /buildeey/
+# Set the working directory to /name/
+WORKDIR /name/
 
-# Copy the current directory contents into the container at /buildeey/
-ADD . /buildeey/
+# Copy the current directory contents into the container at /name/
+ADD . /name/
 
 
 
