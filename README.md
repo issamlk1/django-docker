@@ -1,35 +1,33 @@
 # Django-Docker
 
-> Django Docker together
+> Django Docker 
 
 > For making new projects with docker and django without using virtual environment 
 
-> Easy way to combine django and docker containers
+> Easy way to combine django and docker 
 
 
 ## Installation
 
-- First - Clone this repo to your local machine using `https://github.com/issamlk1/django-docker`
+- First - Clone this repo to your local machine  `git clone https://github.com/issamlk1/django-docker`
 - Then optimize the `dockerfile` and choose your database (Default postgresql)
-- IF you changed anything in the `dockerfile` make sure that you check `requirements.txt` and optimize it too.
-- Open termenal from the local file and follow the next steps
+- Change all the "yourprojectname" to your project name
+- Open terminal from the project file and follow the next steps
 
 ---
 
 ## After optimization
 
 ```shell
-$ sudo docker-compose run web django-admin startproject yourprojectname .
 $ docker-compose build
+$ sudo docker-compose run django django-admin startproject yourprojectname .
 ```
 ---
 
 ### Setup
 - After building the project you need to edit sittings.py to your new database information
 
-> change /yourprojectname/settings.py
-
-> From
+> change /settings.py From
 
 ```python
 DATABASES = {
@@ -68,7 +66,7 @@ $ docker-compose up -d django
 ```
 ---
 
-## ٍShutting down
+## Shutting down
 - To shut down the docker container just type this in the terminal
 
 ```shell
@@ -76,7 +74,7 @@ $ docker-compose down
 ```
 ---
 
-## ٍAccess the containers
+## Access the containers
 - To access the docker containers just type this command in your terminal
 
 > django
@@ -90,7 +88,7 @@ $ docker-compose exec -it postgresql bash
 ```
 ---
 
-## ٍImportant
+## Important
 - If you added new django packages to your projects make sure to run following command from django bash before shutting down 
    
 
@@ -107,7 +105,7 @@ $ docker-compose build django
 ## FAQ
 
 - **How do I use *mysql* database?**
-    - I will provide more explanation soon for this topic.
+    - Inside the docker-compose file you will find comments that will guide you throgh the proccess, don't forget to uncomment the mysqlclient inside requirements.txt file.
 
 ---
 

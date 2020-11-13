@@ -8,21 +8,21 @@ ENV PYTHONUNBUFFERED 1
 
 # create root directory for our project in the container, my project needed name name but you can name it what ever you want
 # You can change the name name to what ever you want
-RUN mkdir /name
+RUN mkdir /yourprojectname
 
 
 #test for cash to make it faster in build
-ADD ./requirements.txt /name/requirements.txt
+ADD ./requirements.txt /yourprojectname/requirements.txt
 
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r /name/requirements.txt
+RUN pip install -r /yourprojectname/requirements.txt
 
-# Set the working directory to /name/
-WORKDIR /name/
+# Set the working directory to /yourprojectname/
+WORKDIR /yourprojectname/
 
-# Copy the current directory contents into the container at /name/
-ADD . /name/
+# Copy the current directory contents into the container at /yourprojectname/
+ADD . /yourprojectname/
 
 
 
