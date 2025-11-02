@@ -21,7 +21,7 @@ $ docker compose build
 ```
 Then create the new project
 ```shell
-$ sudo docker compose run web django-admin startproject config .
+$ docker compose run web django-admin startproject config .
 ```
 ---
 
