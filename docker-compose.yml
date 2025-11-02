@@ -23,9 +23,12 @@ services:
     build:
       context: .
       target: ${APP_ENV:-development} 
+      args:
+        - HOST_UID=${UID-1000}
+        - HOST_GID=${GID-1000}
     volumes:
       - .:/app
-    user: "${UID}"
+    user: "${UID:-1000}:${GID-1000}"
     ports:
       - "8000:8000"
     environment:

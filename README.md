@@ -1,26 +1,27 @@
 # Django-Docker
 
-> Django Docker 
+> Django Docker start up project 
 
 > For making new projects with docker and django without using virtual environment 
+> Now included vite, postcss, bun, tailwindcss
 
-> Easy way to combine django and docker 
 
 
 ## Installation
 
 - First - Clone this repo to your local machine  `git clone https://github.com/issamlk1/django-docker`
-- Then optimize the `dockerfile` and choose your database (Default postgresql)
-- Change all the "yourprojectname" to your project name
+- Create .env file and fill it, it's content is inside the file .env.example for development enviroment
 - Open terminal from the project file and follow the next steps
-
 ---
 
-## After optimization
-
+## Start new project
+First build the docker file
 ```shell
-$ docker-compose build
-$ sudo docker-compose run django django-admin startproject yourprojectname .
+$ docker compose build
+```
+Then create the new project
+```shell
+$ sudo docker compose run web django-admin startproject config .
 ```
 ---
 
@@ -37,13 +38,13 @@ DATABASES = {
     }
 }
 ```
-> If you kept the postgresql it should be like this
+> If you kept the postgresql it should look like this (its better to use the .env)
 
 ```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'yordatabasename',
+        'NAME': 'myproject',
         'USER': 'postgres',
         'PASSWORD' : 'postgres',
         'HOST': 'postgresql',
@@ -53,24 +54,18 @@ DATABASES = {
 ```
 ---
 
-## Getting Started
-- After finishing all the steps above you can start using django by 
+## Start the App
 
 ```shell
-$ docker-compose up django
+$ docker compose up -d
 ```
 
-> If you want it to run background replace it with this
-```shell
-$ docker-compose up -d django
-```
 ---
 
-## Shutting down
-- To shut down the docker container just type this in the terminal
+## Shut down
 
 ```shell
-$ docker-compose down
+$ docker compose down
 ```
 ---
 
@@ -79,17 +74,17 @@ $ docker-compose down
 
 > django
 ```shell
-$ docker-compose exec -it django bash
+$ docker compose exec -it django zsh 
 ```
 
 > postgresql
 ```shell
-$ docker-compose exec -it postgresql bash
+$ docker compose exec -it postgresql bash
 ```
 ---
 
 ## Important
-- If you added new django packages to your projects make sure to run following command from django bash before shutting down 
+- If you added new django packages to your projects make sure to run following command from inside the django container before shutting down 
    
 
 ```shell
@@ -98,14 +93,14 @@ $ pip freeze > requirements.txt
 
 > Then before running the project again build the project again to download your packages
 ```shell
-$ docker-compose build django
+$ docker compose build web
 ```
 ---
 
 ## FAQ
 
 - **How do I use *mysql* database?**
-    - Inside the docker-compose file you will find comments that will guide you throgh the proccess, don't forget to uncomment the mysqlclient inside requirements.txt file.
+    - I removed the mysql example from the project, maybe I'll add it later.
 
 ---
 
@@ -114,7 +109,6 @@ $ docker-compose build django
 Reach out to me at one of the following places!
 
 - Website at <a href="http://mlk1.com" target="_blank">`mlk1.com`</a>
-- Twitter at <a href="https://twitter.com/ISSAM_ABBAS" target="_blank">`@issam_abbas`</a>
 
 ---
 
