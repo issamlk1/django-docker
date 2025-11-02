@@ -1,41 +1,76 @@
-# The first instruction is what image we want to base our container on
-# We Use an official Python runtime as a parent image
-FROM python:3.7
+# ================================
+# Base stage - shared dependencies
+# ================================
+FROM python:3.12-slim AS base
 
-# The enviroment variable ensures that the python output is set straight
-# to the terminal with out buffering it first
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# create root directory for our project in the container, my project needed name name but you can name it what ever you want
-# You can change the name name to what ever you want
-RUN mkdir /yourprojectname
+WORKDIR /app
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
 
-#test for cash to make it faster in build
-ADD ./requirements.txt /yourprojectname/requirements.txt
+# ================================
+# Development stage
+# ================================
+FROM base AS development
 
+# Install dev tools (vim, zsh, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    vim \
+    zsh \
+    wget \
+    git \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r /yourprojectname/requirements.txt
+# Install Oh-My-Zsh
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-# Set the working directory to /yourprojectname/
-WORKDIR /yourprojectname/
+# Developer aliases
+RUN echo 'alias py="python manage.py"' >> ~/.zshrc && \
+    echo 'alias pym="python manage.py migrate"' >> ~/.zshrc && \
+    echo 'alias pys="python manage.py runserver 0.0.0.0:8000"' >> ~/.zshrc && \
+    echo 'alias pysh="python manage.py shell"' >> ~/.zshrc && \
+    echo 'alias pyt="python manage.py test"' >> ~/.zshrc
 
-# Copy the current directory contents into the container at /yourprojectname/
-ADD . /yourprojectname/
+# Copy requirements and install
+COPY requirements*.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt
 
+# Copy project
+COPY . .
 
+EXPOSE 8000
 
-# Yes I am crazy about good looking code, I cant handle it
-RUN apt-get update && apt-get install -y \
-      vim \
-      zsh
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
+# ================================
+# Production stage (lean & mean)
+# ================================
+FROM base AS production
 
-#RUN echo 'alias py="python manage.py"' >> ~/.bashrc
-RUN echo 'alias py="python manage.py"' >> ~/.zshrc
+# Copy requirements and install (production only)
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install gunicorn
 
+# Copy project
+COPY . .
 
+# Collect static files
+RUN python manage.py collectstatic --noinput || true
 
+EXPOSE 8000
 
+# Use gunicorn for production
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
